@@ -7,10 +7,10 @@ use spirv_std::spirv;
 use spirv_std::num_traits::Float;
 
 const PHI: f32 = 1.61803398874989484820459;
-const DENSITY: f32 = 500.0;
+const DENSITY: f32 = 1000.0;
 const SHELLS: f32 = 32.0;
 const GAP: f32 = 0.01;
-const THICKNESS: f32 = 2.0;
+const THICKNESS: f32 = 5.0;
 
 #[spirv(vertex)]
 pub fn main_vs(
@@ -53,6 +53,12 @@ pub fn main_fs(
   }
 
   let color = texture.sample(*sampler, in_tex);
+  //let color = Vec3::new(
+  //  gold_noise(local_tex, 1.0),
+  // gold_noise(local_tex, 1.5),
+  // gold_noise(local_tex, 2.0),
+  //)
+  //.extend(1.0);
   let ao = (instance_index as f32 / SHELLS + 0.3).min(1.0);
   *output = color * ao;
 }
